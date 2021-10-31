@@ -19,6 +19,17 @@ export default function App() {
     }
   } 
 
+  //https://stackoverflow.com/questions/44656610/download-a-string-as-txt-file-in-react/44661948
+  const handleSave = (e) => {
+    e.preventDefault();
+    const element = document.createElement("a");
+    const file = new Blob([fileContent], {type: "text/json"});
+    element.href = URL.createObjectURL(file);
+    element.download = "export.json";
+    document.body.appendChild(element); //Required for this to work in FireFox
+    element.click();
+  }
+
   return (
     <div className="App">
       <Container>
@@ -39,6 +50,9 @@ export default function App() {
           <div style={{whiteSpace: "pre-wrap"}}>
             {fileContent}
           </div>            
+        </Row>
+        <Row>
+          <Button onClick={handleSave}>Save File</Button>
         </Row>
       </Container>
     </div>
